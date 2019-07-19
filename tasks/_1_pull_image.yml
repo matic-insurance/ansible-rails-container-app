@@ -8,7 +8,8 @@
 
 - name: 'Image: pull'
   docker_image:
-    force: '{{ app_force_image_pull }}'
+    force_source: '{{ app_force_image_pull }}'
     name: '{{ app_docker_image }}'
     tag: '{{ app_docker_image_tag }}'
+    source: pull
   register: app_docker_image_status
