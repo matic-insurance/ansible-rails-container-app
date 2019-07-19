@@ -26,6 +26,8 @@ app_command: 'bundle exec rails s'
 app_environment_vars: {}
 # Configuration files to deploy on server and mount to image
 app_configuration_files: {}
+# Configuration jinja2 templates to deploy on server and mount to image
+app_configuration_templates: {}
 
 ###########################################################################
 # Optional settings
@@ -33,6 +35,8 @@ app_configuration_files: {}
 app_environment: production
 # Folder with all config files on local machine
 app_files_local_folder: './files'
+# Folder with all config templates on local machine
+app_templates_local_folder: './templates'
 #Force image pull
 app_force_image_pull: true
 #Docker container restart policy

@@ -73,7 +73,7 @@ Simpliest playbook can be following:
       app_docker_tag: 'latest'
       app_ports_mapping: ['3000:3000']
 ```
-This playbook will pull image maticinsurace/rails-app:latest, 
+This playbook will pull image maticinsurace/rails-app:latest,
 run migrations `bundle exec rake db:migrate` and start rails app `bundle exec rails s`
 
 If you want to specify additional environment variables:
@@ -82,7 +82,7 @@ If you want to specify additional environment variables:
   roles:
     - role: rails-container-app
       app_command: 'bundle exec sidekiq'
-      app_environment_vars: 
+      app_environment_vars:
         REDIS_URL: redis://redis.host:6379
         DATABASE_URL: postgress://db.host:5432
 ```
@@ -94,13 +94,24 @@ If you want custom files to be deployed to the app:
   roles:
     - role: rails-container-app
       app_files_local_folder: './files/webserver'
-      app_configuration_files: 
+      app_configuration_files:
         settings.yaml: /app/config/settings.local.yaml
         apns_cert.pem: certs/apns.pem
 ```
 This will read file from local machine using key as path after `app_files_local_folder`
-and mount them to docker image using value as path. E.g `./files/webserver/settings.yaml` 
+and mount them to docker image using value as path. E.g `./files/webserver/settings.yaml`
 will be mounted as `/app/config/settings.local.yam:ro`
+
+The same way you can render Jinja2 templates via `app_configuration_templates`:
+
+```yaml
+- hosts: webservers
+  roles:
+    - role: rails-container-app
+      app_templates_local_folder: './templates/webserver'
+      app_configuration_templates:
+        settings.local.yml.j2: /app/config/settings.local.yml
+```
 
 License
 -------
