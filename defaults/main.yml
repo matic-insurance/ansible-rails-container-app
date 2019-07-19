@@ -35,6 +35,8 @@ app_configuration_templates: {}
 app_environment: production
 # Folder with all config files on local machine
 app_files_local_folder: './files'
+# Folder with all config templates on local machine
+app_templates_local_folder: './templates'
 #Force image pull
 app_force_image_pull: true
 #Docker container restart policy

@@ -20,7 +20,7 @@
 
 - name: 'Configuration: Render config templates'
   template:
-    src: "{{ app_files_local_folder }}/{{ item.key }}"
+    src: "{{ app_templates_local_folder }}/{{ item.key }}"
     dest: '{{ app_settings_path }}/{{ item.value }}'
   with_dict: '{{ app_configuration_templates }}'
   register: app_config_templates_status
