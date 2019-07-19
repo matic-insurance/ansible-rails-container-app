@@ -9,14 +9,21 @@
     path: "{{ app_settings_path + '/' + item.value | dirname }}"
     state: 'directory'
     recurse: yes
-  with_dict: '{{ app_configuration_files }}'
+  with_dict: '{{ app_configuration_files | combine(app_configuration_templates) }}'
 
-- name: 'Configuration: Render config files'
+- name: 'Configuration: Copy static config files'
   copy:
     src: "{{ app_files_local_folder }}/{{ item.key }}"
     dest: '{{ app_settings_path }}/{{ item.value }}'
   with_dict: '{{ app_configuration_files }}'
-  register: app_configs_status
+  register: app_config_files_status
+
+- name: 'Configuration: Render config templates'
+  template:
+    src: "{{ app_files_local_folder }}/{{ item.key }}"
+    dest: '{{ app_settings_path }}/{{ item.value }}'
+  with_dict: '{{ app_configuration_templates }}'
+  register: app_config_templates_status
 
 - name: 'Configuration: Prepare empty volumes list'
   set_fact:
@@ -26,5 +33,5 @@
 - name: 'Configuration: Prepare volumes list'
   set_fact:
     app_container_volumes: "{{ app_container_volumes|default([]) + [ app_settings_path + '/' + item.value + ':' + item.value + ':ro' ] }}"
-  with_dict: '{{ app_configuration_files }}'
-  changed_when: app_configs_status.changed
+  with_dict: '{{ app_configuration_files | combine(app_configuration_templates) }}'
+  changed_when: app_config_files_status.changed or app_config_templates_status.changed

@@ -26,6 +26,8 @@ app_command: 'bundle exec rails s'
 app_environment_vars: {}
 # Configuration files to deploy on server and mount to image
 app_configuration_files: {}
+# Configuration jinja2 templates to deploy on server and mount to image
+app_configuration_templates: {}
 
 ###########################################################################
 # Optional settings
